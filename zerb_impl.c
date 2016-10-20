@@ -96,9 +96,49 @@ void sesioa(int s){
 			continue;
 		}
 		
-		switch(komando):
-		case COM_LGIN:
-			break:
+		switch(komando){//Komandoaren arabera gauza bat egin edo bestea
+			case COM_LGIN:
+				if( (error = f_lgin()) < 0){
+					erroreaBidali(ERR_LGIN) //1
+				}
+				break:
+			case COM_LGOU:
+				f_lgou();
+				break:
+			case COM_TEXT:
+				if( (error = f_text()) < 0){
+					erroreaBidali(ERR_TEXT) //2
+				}
+				break:
+			case COM_RFSH:
+				if( (error = f_rfsh()) < 0){
+					erroreaBidali(ERR_RFSH) //3
+				}
+				break:
+			case COM_INBX:
+				if( (error = f_inbx()) < 0){
+					erroreaBidali(ERR_INBX) //4
+				}
+				break:
+			case COM_SENT:
+				if( (error = f_sent()) < 0){
+					erroreaBidali(ERR_SENT) //5
+				}
+				break:
+			case COM_OPEN:
+				if( (error = f_open()) < 0){
+					erroreaBidali(ERR_OPEN) //6
+				}
+				break:
+			case COM_REMV:
+				if( (error = f_remv()) < 0){
+					erroreaBidali(ERR_REMV) //7
+				}
+				break:
+				
+		}
+		
+		
 		
 	}
 }
