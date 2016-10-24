@@ -69,7 +69,7 @@ int main(){
 	}
 }
 
-void sesioa(int s){
+void sesioa(int bez_sock){
 	char buf[MAX_BUF], file_path[MAX_BUF], file_name[MAX_BUF];
 	int n, erabiltzaile, komando, error;
 	FILE *mezua;
@@ -84,7 +84,7 @@ void sesioa(int s){
 	while(1){
 		
 		
-		// Irakurri bezeroak bidalitako mezua.
+		// Irakurri bezeroak bidalitako mezua (komandoa bera bere argumentuekin batera)
 		if((n=readline(s,buf,MAX_BUF)) <= 0){
 			return;
 		}
@@ -98,7 +98,7 @@ void sesioa(int s){
 		
 		switch(komando){//Komandoaren arabera gauza bat egin edo bestea
 			case COM_LGIN:
-				if( (error = f_lgin()) < 0){
+				if( f_lgin(n) < 0){
 					erroreaBidali(ERR_LGIN) //1
 				}
 				break:
@@ -106,32 +106,35 @@ void sesioa(int s){
 				f_lgou();
 				break:
 			case COM_TEXT:
-				if( (error = f_text()) < 0){
+				if( f_text() < 0){
 					erroreaBidali(ERR_TEXT) //2
 				}
+				f_text()
 				break:
 			case COM_RFSH:
-				if( (error = f_rfsh()) < 0){
+				if( f_rfsh() < 0){
 					erroreaBidali(ERR_RFSH) //3
 				}
+				f_rfsh();
 				break:
 			case COM_INBX:
-				if( (error = f_inbx()) < 0){
+				if( f_inbx() < 0){
 					erroreaBidali(ERR_INBX) //4
 				}
+				f_inbx();
 				break:
 			case COM_SENT:
-				if( (error = f_sent()) < 0){
+				if( f_sent() < 0){
 					erroreaBidali(ERR_SENT) //5
 				}
 				break:
 			case COM_OPEN:
-				if( (error = f_open()) < 0){
+				if( f_open() < 0){
 					erroreaBidali(ERR_OPEN) //6
 				}
 				break:
 			case COM_REMV:
-				if( (error = f_remv()) < 0){
+				if( f_remv() < 0){
 					erroreaBidali(ERR_REMV) //7
 				}
 				break:
@@ -154,3 +157,61 @@ int bilatu_substring(char *string, char **string_zerr)
 	}
 	return -1;
 }
+
+int bilatu_erab_pass(char* kom, char** args){
+	if( strlen(kom) == 4){ //LGIN komandoa jaso bada argumenturik gabe
+		return -1;
+	}
+	if( kom[4] == "@"){ //Erabiltzailea falta da
+		return -1
+	}
+	if( kom[strlen(kom)-1] == "@"){ //Pasahitza falta da
+		return -1
+	}
+	int i = 5;
+	int aurkitua = 0;
+	while (i < strlen(kom)-2 && !aurkitua){
+		if( kom[i] == "@" ){
+			aurkitua = 1
+		}
+		else{
+			i++;
+		}
+	}
+	if(!aurkitua){ //Ez dago @-rik
+		return -1;
+	}
+	
+	//Erabiltzailea gorde
+	for (int j = 4; j<i; j++){
+		args[0][j-4] = kom[j];
+	}
+	
+	//Pasahitza gorde
+	for (int j = i+1; j<strlen(kom); j++){
+		args[1][j-(i+1)] = kom[j];
+	}
+	
+	return 0;
+	
+}
+
+int f_lgin(char *kom){
+	char** argumentuak = (char**)malloc(sizeof(char)*2*MAX_BUF);
+	if( ( n = bilatu_erab_pass(kom, argumentuak) ) < 0){
+		return -1;
+	}
+	else{
+		//Konparatu erabiltzailea eta pasahitza strcmp()-rekin eta iksui ea dagoen
+	}
+}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
