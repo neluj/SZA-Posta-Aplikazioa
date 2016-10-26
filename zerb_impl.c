@@ -14,6 +14,8 @@
 
 #include "zerb_fitx.h"
 
+char* erabiltzaile;
+
 int main(){
 	int sock, elkarrizketa;
 	struct sockaddr_in zerb_helb;
@@ -78,7 +80,7 @@ void sesioa(int bez_sock){
 	char * sep;
 	
 	// Zehaztu uneko egoera bezala hasierako egoera.
-	egoera = ST_INIT;
+	int egoera = ST_INIT;
 	
 	
 	while(1){
@@ -98,61 +100,73 @@ void sesioa(int bez_sock){
 		
 		switch(komando){//Komandoaren arabera gauza bat egin edo bestea
 			case COM_LGIN:
-				if( f_lgin(n) < 0){
+				if( (egoera != ST_INIT) || (f_lgin(n) < 0) ){
 					erroreaBidali(ERR_LGIN) //1
 				}
+				egoera = ST_AUTH;
 				break:
 			case COM_LGOU:
-				f_lgou();
+				if(egoera == ST_AUTH){
+					f_lgou();
+				}
+				egoera = ST_INIT;
 				break:
 			case COM_TEXT:
-				if( f_text() < 0){
+				if( (egoera != ST_INIT) || (f_text(n) < 0) ){
 					erroreaBidali(ERR_TEXT) //2
 				}
 				f_text()
 				break:
 			case COM_RFSH:
-				if( f_rfsh() < 0){
+				if( (egoera != ST_INIT) || (f_rfsh() < 0) ){
 					erroreaBidali(ERR_RFSH) //3
 				}
 				f_rfsh();
 				break:
 			case COM_INBX:
-				if( f_inbx() < 0){
+				if( (egoera != ST_INIT) || (f_inbx()) < 0) ){
 					erroreaBidali(ERR_INBX) //4
 				}
 				f_inbx();
 				break:
 			case COM_SENT:
-				if( f_sent() < 0){
+				if( (egoera != ST_INIT) || (f_sent() < 0) ){
 					erroreaBidali(ERR_SENT) //5
 				}
 				break:
 			case COM_OPEN:
-				if( f_open() < 0){
+				if( (egoera != ST_INIT) || (f_open(n) < 0) ){
 					erroreaBidali(ERR_OPEN) //6
 				}
 				break:
 			case COM_REMV:
-				if( f_remv() < 0){
+				if( (egoera != ST_INIT) || (f_remv(n) < 0) ){
 					erroreaBidali(ERR_REMV) //7
 				}
 				break:
-				
 		}
-		
-		
-		
 	}
+}
+
+int bilatu_string(char *string, char **string_zerr)
+{
+	int i=0;
+	while(string_zerr[i] != NULL){
+		if( !strcmp(string,string_zerr[i]) ){
+			return i;
+		}
+		i++;
+	}
+	return -1;
 }
 
 int bilatu_substring(char *string, char **string_zerr)
 {
 	int i=0;
-	while(string_zerr[i] != NULL)
-	{
-		if(!strncmp(string,string_zerr[i],strlen(string_zerr[i])))
+	while(string_zerr[i] != NULL){
+		if(!strncmp(string,string_zerr[i],strlen(string_zerr[i]))){
 			return i;
+		}
 		i++;
 	}
 	return -1;
@@ -202,8 +216,21 @@ int f_lgin(char *kom){
 		return -1;
 	}
 	else{
-		//Konparatu erabiltzailea eta pasahitza strcmp()-rekin eta iksui ea dagoen
+		aurkitu = 0
+		if( bilatu_string(argumentuak[0], erab_zer) < 0){
+			return -1;
+		}
+		if( bilatu_string(argumentuak[1], pass_zer) < 0){
+			return -1;
+		}
+		erabiltzaile = (char*)malloc(sizeof(argumentuak[0]));
+		strcpy(erabiltzaile, argumentuak[0]);
 	}
+}
+
+int f_lgou(){
+	erabiltzaile
+	
 }
 			
 			

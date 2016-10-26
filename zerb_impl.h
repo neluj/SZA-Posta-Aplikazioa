@@ -1,5 +1,8 @@
 #define MAX_BUF 1024
 
+#define ST_INIT	0
+#define ST_AUTH	1
+
 #define ERR_LGIN	1
 #define ERR_TEXT	2
 #define ERR_RFSH	3
@@ -21,4 +24,12 @@
 char * KOMANDOAK[] = {"LGIN", "LGOU", "TEXT", "RFSH", "INBX", "SENT", "OPEN", "REMV", NULL};
 char * erab_zer[] = {"xabiier", "tiza", "", NULL};
 char * pass_zer[] = {"djsona", "pipo", "", NULL};
+int bilatu_erab_pass(char* kom, char** args);
+int bilatu_string(char *string, char **string_zerr);
+int bilatu_substring(char *string, char **string_zerr);
 void sesioa(int s);
+
+int f_lgin(char *com);
+int f_lgou();
+int f_text(char *com);
+int f_rfsh();
