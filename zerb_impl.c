@@ -11,10 +11,9 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <sys/statvfs.h>
+#include <malloc.h>
 
 #include "zerb_fitx.h"
-
-char* erabiltzaile;
 
 int main(){
 	int sock, elkarrizketa;
@@ -46,7 +45,10 @@ int main(){
 
 	// Adierzi SIG_CHLD seinalea jasotzean ez dela ezer egingo. Modu honetan amaitutako prozesu umeak ez dira zonbi egoeran geratuko.
 	signal(SIGCHLD, SIG_IGN);
-	
+
+
+	sortuErabiltzaileDir(erab_zer);
+
 	while(1)
 	{
 	
@@ -71,174 +73,79 @@ int main(){
 	}
 }
 
-void sesioa(int bez_sock){
-	char buf[MAX_BUF], file_path[MAX_BUF], file_name[MAX_BUF];
-	int n, erabiltzaile, komando, error;
+void sesioa(int elkarrizketa) {
+	char buf[MAX_BUF];
+	int n, komando, error;
+
+	int erabiltzaile = -1; //Erabiltzailearen indizea 'erab_zer' zerrendan
 	FILE *mezua;
-	struct stat file_info;//??
 	unsigned long file_size, irakurrita;
-	char * sep;
-	
+	char *sep;
+
 	// Zehaztu uneko egoera bezala hasierako egoera.
 	int egoera = ST_INIT;
-	
-	
-	while(1){
-		
-		
+
+
+	while (1) {
+
+
 		// Irakurri bezeroak bidalitako mezua (komandoa bera bere argumentuekin batera)
-		if((n=readline(s,buf,MAX_BUF)) <= 0){
+		if ((n = read(s, buf, MAX_BUF)) <= 0) {
 			return;
 		}
-		
+
 		// Aztertu jasotako komandoa ezaguna den ala ez.
-		if((komando=bilatu_substring(buf,KOMANDOAK)) < 0)
-		{
+		if ((komando = bilatu_substring(buf, KOMANDOAK)) < 0) {
 			printf("%s komandoa ezezaguna da", komando);
 			continue;
 		}
-		
-		switch(komando){//Komandoaren arabera gauza bat egin edo bestea
+
+		switch (komando) {//Komandoaren arabera gauza bat egin edo bestea
 			case COM_LGIN:
-				if( (egoera != ST_INIT) || (f_lgin(n) < 0) ){
-					erroreaBidali(ERR_LGIN) //1
+				if ((egoera != ST_INIT) || (f_lgin(n, elkarrizketa, &erabiltzailea) < 0)) {
+					erroreaBidali(ERR_LGIN, elkarrizketa); //1
 				}
 				egoera = ST_AUTH;
-				break:
+				break;
 			case COM_LGOU:
-				if(egoera == ST_AUTH){
-					f_lgou();
+				if (egoera == ST_AUTH) {
+					f_lgou(elkarrizketa, &erabiltzailea);
+					egoera = ST_INIT;
 				}
-				egoera = ST_INIT;
-				break:
+				break;
 			case COM_TEXT:
-				if( (egoera != ST_INIT) || (f_text(n) < 0) ){
-					erroreaBidali(ERR_TEXT) //2
+				if ((egoera != ST_INIT) || (f_text(n, elkarrizketa, erabiltzaile) < 0)) {
+					erroreaBidali(ERR_TEXT, elkarrizketa); //2
 				}
-				f_text()
-				break:
+				f_text();
+				break;
 			case COM_RFSH:
-				if( (egoera != ST_INIT) || (f_rfsh() < 0) ){
-					erroreaBidali(ERR_RFSH) //3
+				if ((egoera != ST_INIT) || (f_rfsh(elkarrizketa, erabiltzaile) < 0)) {
+					erroreaBidali(ERR_RFSH, elkarrizketa); //3
 				}
 				f_rfsh();
-				break:
+				break;
 			case COM_INBX:
-				if( (egoera != ST_INIT) || (f_inbx()) < 0) ){
-					erroreaBidali(ERR_INBX) //4
+				if ((egoera != ST_INIT) || (f_inbx(elkarrizketa, erabiltzaile) < 0)) {
+					erroreaBidali(ERR_INBX, elkarrizketa); //4
 				}
 				f_inbx();
-				break:
+				break;
 			case COM_SENT:
-				if( (egoera != ST_INIT) || (f_sent() < 0) ){
-					erroreaBidali(ERR_SENT) //5
+				if ((egoera != ST_INIT) || (f_sent(elkarrizketa, erabiltzaile) < 0)) {
+					erroreaBidali(ERR_SENT); //5
 				}
-				break:
+				break;
 			case COM_OPEN:
-				if( (egoera != ST_INIT) || (f_open(n) < 0) ){
-					erroreaBidali(ERR_OPEN) //6
+				if ((egoera != ST_INIT) || (f_open(n, elkarrizketa, erabiltzaile) < 0)) {
+					erroreaBidali(ERR_OPEN, elkarrizketa); //6
 				}
-				break:
+				break;
 			case COM_REMV:
-				if( (egoera != ST_INIT) || (f_remv(n) < 0) ){
-					erroreaBidali(ERR_REMV) //7
+				if ((egoera != ST_INIT) || (f_remv(n, elkarrizketa, erabiltzaile) < 0)) {
+					erroreaBidali(ERR_REMV, elkarrizketa); //7
 				}
-				break:
+				break;
 		}
 	}
 }
-
-int bilatu_string(char *string, char **string_zerr)
-{
-	int i=0;
-	while(string_zerr[i] != NULL){
-		if( !strcmp(string,string_zerr[i]) ){
-			return i;
-		}
-		i++;
-	}
-	return -1;
-}
-
-int bilatu_substring(char *string, char **string_zerr)
-{
-	int i=0;
-	while(string_zerr[i] != NULL){
-		if(!strncmp(string,string_zerr[i],strlen(string_zerr[i]))){
-			return i;
-		}
-		i++;
-	}
-	return -1;
-}
-
-int bilatu_erab_pass(char* kom, char** args){
-	if( strlen(kom) == 4){ //LGIN komandoa jaso bada argumenturik gabe
-		return -1;
-	}
-	if( kom[4] == "@"){ //Erabiltzailea falta da
-		return -1
-	}
-	if( kom[strlen(kom)-1] == "@"){ //Pasahitza falta da
-		return -1
-	}
-	int i = 5;
-	int aurkitua = 0;
-	while (i < strlen(kom)-2 && !aurkitua){
-		if( kom[i] == "@" ){
-			aurkitua = 1
-		}
-		else{
-			i++;
-		}
-	}
-	if(!aurkitua){ //Ez dago @-rik
-		return -1;
-	}
-	
-	//Erabiltzailea gorde
-	for (int j = 4; j<i; j++){
-		args[0][j-4] = kom[j];
-	}
-	
-	//Pasahitza gorde
-	for (int j = i+1; j<strlen(kom); j++){
-		args[1][j-(i+1)] = kom[j];
-	}
-	
-	return 0;
-	
-}
-
-int f_lgin(char *kom){
-	char** argumentuak = (char**)malloc(sizeof(char)*2*MAX_BUF);
-	if( ( n = bilatu_erab_pass(kom, argumentuak) ) < 0){
-		return -1;
-	}
-	else{
-		aurkitu = 0
-		if( bilatu_string(argumentuak[0], erab_zer) < 0){
-			return -1;
-		}
-		if( bilatu_string(argumentuak[1], pass_zer) < 0){
-			return -1;
-		}
-		erabiltzaile = (char*)malloc(sizeof(argumentuak[0]));
-		strcpy(erabiltzaile, argumentuak[0]);
-	}
-}
-
-int f_lgou(){
-	erabiltzaile
-	
-}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			

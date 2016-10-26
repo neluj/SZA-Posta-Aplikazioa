@@ -22,14 +22,7 @@
 #define COM_REMV	7
 
 char * KOMANDOAK[] = {"LGIN", "LGOU", "TEXT", "RFSH", "INBX", "SENT", "OPEN", "REMV", NULL};
-char * erab_zer[] = {"xabiier", "tiza", "", NULL};
-char * pass_zer[] = {"djsona", "pipo", "", NULL};
-int bilatu_erab_pass(char* kom, char** args);
-int bilatu_string(char *string, char **string_zerr);
-int bilatu_substring(char *string, char **string_zerr);
-void sesioa(int s);
+char * erab_zer[] = {"xabiier", "tiza", "a", NULL};
+char * pass_zer[] = {"djsona", "pipo", "a", NULL};
 
-int f_lgin(char *com);
-int f_lgou();
-int f_text(char *com);
-int f_rfsh();
+void sesioa(int s);
