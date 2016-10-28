@@ -1,6 +1,35 @@
+
+
 int sortuErabiltzaileDir(char *erabiltzaileak){
 
     //SORTU ERABILTZAILE BAKOITZAREN KARPETAK GERO BAKOITZEAN BAKOITZAREN JASOTAKO/BIDALITAKO MEZUAK GORDETZEKO
+    int i=0;
+    char dir[MAX_BUF];
+    char azpidir[MAX_BUF];
+    while(erabiltzaileak[i] != NULL){
+        getcwd(dir, sizeof(dir));
+        sprintf(dir, "mkdir %s%s/", dir, erabiltzaileak[i]);
+        struct stat sb;
+        //Karpeta ez bada existitzen sortu
+        if ( !(stat(dir, &sb) == 0 && S_ISDIR(sb.st_mode))){
+
+            // ./"erabiltzaileIzena"/
+            system(dir);
+
+            // ./"erabiltzaileIzena"/inbx/
+            azpidir[0] = 0;
+            sprintf(azpidir, "%s%s", dir, "inbx/");
+            system(azpidir);
+
+            // ./"erabiltzaileIzena"/sent/
+            azpidir[0] = 0;
+            sprintf(azpidir, "%s%s", dir, "sent/");
+            system(azpidir);
+        }
+
+        i++;
+    }
+    return -1;
 
 }
 

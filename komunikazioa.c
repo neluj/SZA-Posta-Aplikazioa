@@ -40,3 +40,35 @@ int f_lgou(int elkarrizketa, int *erabiltzaile){
     exit(0);
 
 }
+
+int f_text(char* kom, int elkarrizketa, int erabiltzailea){
+    //Protokoloa aldatu behar da, fitxategiaren tamaiana jakin behar dugu osorik jaso dugula jakiteko, astelehenean komentatu
+    1,2,3,4,5,6,7,8,9,10
+
+}
+
+int f_rfsh(int elkarrizketa, int erabiltzailea){
+
+
+}
+
+int f_inbx(int elkarrizketa, int erabiltzailea){
+
+
+}
+
+int f_inbx(int elkarrizketa, int erabiltzailea){
+
+
+}
+
+
+int f_open(char* kom, int elkarrizketa, int erabiltzailea){
+
+
+}
+
+int f_remv(char* kom, int elkarrizketa, int erabiltzailea){
+
+
+}

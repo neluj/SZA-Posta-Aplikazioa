@@ -16,6 +16,8 @@
 #include "zerb_fitx.h"
 
 int main(){
+    sortuDirektorioak(erab_zer);
+
 	int sock, elkarrizketa;
 	struct sockaddr_in zerb_helb;
 	socklen_t helb_tam;
@@ -77,7 +79,7 @@ void sesioa(int elkarrizketa) {
 	char buf[MAX_BUF];
 	int n, komando, error;
 
-	int erabiltzaile = -1; //Erabiltzailearen indizea 'erab_zer' zerrendan
+	int erabiltzailea = -1; //Erabiltzailearen indizea 'erab_zer' zerrendan
 	FILE *mezua;
 	unsigned long file_size, irakurrita;
 	char *sep;

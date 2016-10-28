@@ -25,4 +25,5 @@ char * KOMANDOAK[] = {"LGIN", "LGOU", "TEXT", "RFSH", "INBX", "SENT", "OPEN", "R
 char * erab_zer[] = {"xabiier", "tiza", "a", NULL};
 char * pass_zer[] = {"djsona", "pipo", "a", NULL};
 
+
 void sesioa(int s);
