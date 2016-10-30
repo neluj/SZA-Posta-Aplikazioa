@@ -190,7 +190,7 @@ int main(int argc, char const *argv[])
 				break;			
 
 			case OP_DEL: // Mezu bat ezabatu.
-				printf("Idatzi ezabatu nahi duzun fitxategiaren izena: ");
+				printf("Idatzi ezabatu nahi duzun mezuaren izena: ");
 				fgets(param,MAX_BUF,stdin);
 				param[strlen(param)-1] = 0;
 				sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_DELE/*mezu bat ezabatzearen komandoa*/], param);
@@ -203,10 +203,10 @@ int main(int argc, char const *argv[])
 				}else{
 					printf("%s fitxategia ezabatua izan da.\n", param);
 				}
-				break;
+				break; 
 
 			case OP_OPE:		// Mezu bat zabaldu.
-				printf("Idatzi zabaldu nahi duzun fitxategiaren izena: ");
+				printf("Idatzi zabaldu nahi duzun mezuaren izena: ");
 				fgets(param,MAX_BUF,stdin);
 				param[strlen(param)-1] = 0;
 				sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_DELE/*mezu bat zabaltzearen komandoa*/], param);
@@ -223,7 +223,7 @@ int main(int argc, char const *argv[])
 				break;
 
 			case OP_SEN:		// Mezu bat bidali.
-				printf("Idatzi bidali nahi duzun fitxategiaren izena: ");
+				printf("Idatzi bidali nahi duzun mezuaren izena: ");
 				fgets(param,MAX_BUF,stdin);
 				param[strlen(param)-1] = 0;
 				sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_DELE/*mezu bat bidaltzearen komandoa*/], param);
@@ -269,7 +269,7 @@ int menua()
 	printf("\t\t\t\t**    	  1. Jasotako mezuen zerrenda      **\n"); //OIHAN
 	printf("\t\t\t\t**        2. Bidalitako mezuen zerrenda    **\n"); //OIHAN
 	printf("\t\t\t\t**        3. Mezu bat ezabatu              **\n"); //OIHAN (einde)
-	printf("\t\t\t\t**        4. Mezu bat zabaldu              **\n"); //JULEN
+	printf("\t\t\t\t**        4. Mezu bat zabaldu              **\n"); //JULEN (einda)
 	printf("\t\t\t\t**        5. Mezu bat bidali               **\n"); //JULEN
 	printf("\t\t\t\t**        6. Saioa amaitu                  **\n"); //JULEN (einde)
 	printf("\t\t\t\t**                                         **\n");
