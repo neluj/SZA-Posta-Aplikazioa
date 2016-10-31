@@ -192,7 +192,9 @@ int main(int argc, char const *argv[])
 					fprintf(stderr,"%s",ER_MEZUAK[status]);
 				}else{
 					//printf("%s fitxategia ezabatua izan da.\n", param);
-					//mezu hori bistaratu. nola?
+					//mezu hori bistaratu.
+					//mezuaren izenburua
+					//mezuaren testua
 				}
 				break;
 

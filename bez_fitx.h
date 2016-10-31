@@ -6,16 +6,15 @@
 #define COM_LGIN	0
 #define COM_PASS	1
 #define COM_LGOU	2
-#define COM_TEXT	3
-#define COM_RFSH	4
-#define COM_INBX	5
-#define COM_SENT	6
-#define COM_OPEN	7
-#define COM_REMV	8
+#define COM_RFSH	3
+#define COM_INBX	4
+#define COM_SENT	5
+#define COM_OPEN	6
+#define COM_REMV	7
 
 
 char * KOMANDOAK[] = {"LGIN","PASS","LGOU", "TEXT", "RFSH", "INBX", "SENT", "OPEN", "REMV", NULL};
-char * ER_MEZUAK[] = //mezuak aldatu bidie
+char * ER_MEZUAK[] = //mezuak lekuz aldatu bidie
 {
 	"Dena ondo. Errorerik ez.\n",
 	"Komando ezezaguna edo ustegabekoa.\n",
