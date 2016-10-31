@@ -4,7 +4,7 @@
 
 int main(int argc, char const *argv[])
 {
-	char buf[MAX_BUF], param[MAX_BUF];
+	char buf[MAX_BUF], param[MAX_BUF], param2[MAX_BUF];
 	char zerbitzaria[MAX_BUF];
 	int portua = PORT;
 
@@ -202,8 +202,10 @@ int main(int argc, char const *argv[])
 				printf("Idatzi bidali nahi duzun fitxategiaren izena: ");
 				fgets(param,MAX_BUF,stdin);
 				param[strlen(param)-1] = 0;
-				sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_SENT], param);
-				//nori bidali biakon nun jarri bida?
+				printf("Idatzi hartzailearen erabiltzaile izena mesedez: ");
+				fgets(param2,MAX_BUF,stdin);
+				param2[strlen(param2)-1] = 0;
+				sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_SENT], param, param2);
 				write(sock,buf,strlen(buf));				// Eskaera bidali.
 				n = readline(sock, buf, MAX_BUF);		// Erantzuna jaso.
 				status = parse(buf);
@@ -212,7 +214,6 @@ int main(int argc, char const *argv[])
 					fprintf(stderr,"%s",ER_MEZUAK[status]);
 				}else{
 					printf("%s fitxategia bidalia izan da.\n", param);
-					//mezu hori bidali. nola?
 				}
 				break;
 
@@ -246,7 +247,7 @@ int menua()
 	printf("\t\t\t\t**        2. Bidalitako mezuen zerrenda    **\n"); //OIHAN (einde)
 	printf("\t\t\t\t**        3. Mezu bat ezabatu              **\n"); //OIHAN (einde)
 	printf("\t\t\t\t**        4. Mezu bat zabaldu              **\n"); //JULEN
-	printf("\t\t\t\t**        5. Mezu bat bidali               **\n"); //JULEN
+	printf("\t\t\t\t**        5. Mezu bat bidali               **\n"); //JULEN (einde)
 	printf("\t\t\t\t**        6. Saioa amaitu                  **\n"); //JULEN (einde)
 	printf("\t\t\t\t**                                         **\n");
 	printf("\t\t\t\t*********************************************\n");
