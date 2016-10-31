@@ -2,7 +2,7 @@
 #define SERVER "localhost"
 #define PORT 6012
 
-
+//prueba
 #define COM_LGIN	0
 #define COM_PASS	1
 #define COM_LGOU	2
