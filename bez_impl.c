@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
 		perror("Errorea socketa sortzean");
 		exit(1);
 	}
-
+//proba
 	// Zerbitzariko socketaren helbidea sortu.
 	zerb_helb.sin_family = AF_INET;
 	zerb_helb.sin_port = htons(portua);
