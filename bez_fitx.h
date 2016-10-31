@@ -2,23 +2,19 @@
 #define SERVER "localhost"
 #define PORT 6012
 
-#define ERR_LGIN	1
-#define ERR_TEXT	2
-#define ERR_RFSH	3
-#define ERR_INBX	4
-#define ERR_SENT	5
-#define ERR_OPEN	6
-#define ERR_REMV	7
 
-#define OP_SEND_LIST	1
-#define OP_RECV_LIST	2
-#define OP_DOWN			3
-#define OP_UP			4
-#define OP_DEL			5
-#define OP_EXIT			6
+#define COM_LGIN	0
+#define COM_PASS	1
+#define COM_LGOU	2
+#define COM_TEXT	3
+#define COM_RFSH	4
+#define COM_INBX	5
+#define COM_SENT	6
+#define COM_OPEN	7
+#define COM_REMV	8
 
 
-char * KOMANDOAK[] = {"LGIN", "LGOU", "TEXT", "RFSH", "INBX", "SENT", "OPEN", "REMV", NULL};
+char * KOMANDOAK[] = {"LGIN","PASS","LGOU", "TEXT", "RFSH", "INBX", "SENT", "OPEN", "REMV", NULL};
 char * ER_MEZUAK[] = //mezuak aldatu bidie
 {
 	"Dena ondo. Errorerik ez.\n",

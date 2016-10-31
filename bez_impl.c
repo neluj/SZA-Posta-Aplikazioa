@@ -55,7 +55,7 @@ int main(int argc, char const *argv[])
 		printf("Erabiltzaile izena: ");
 		fgets(param,MAX_BUF,stdin);
 		param[strlen(param)-1] = 0;
-		sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_USER],param);
+		sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_LGIN],param);
 		
 		write(sock, buf, strlen(buf));
 		readline(sock, buf, MAX_BUF);
@@ -92,8 +92,8 @@ int main(int argc, char const *argv[])
 		aukera = menua();		// Erakutsi aukeren menua.
 		switch(aukera)
 		{
-			case OP_RECV_LIST:	// Fitxategi zerrenda eskatu eta pantailaratu.
-				sprintf(buf,"%s\r\n",KOMANDOAK[COM_LIST]);
+			case COM_INBX:	// Fitxategi zerrenda eskatu eta pantailaratu.
+				sprintf(buf,"%s\r\n",KOMANDOAK[COM_INBX]);
 				write(sock,buf,strlen(buf));				// Bidali komandoa.
 				n = readline(sock, buf, MAX_BUF);		// Erantzuna jaso.
 				status = parse(buf);
@@ -128,8 +128,8 @@ int main(int argc, char const *argv[])
 				break;
 
 				//Behar ez diren kode-lerroak ezabatu
-			case OP_SEND_LIST:	// Fitxategi zerrenda eskatu eta pantailaratu.
-				sprintf(buf,"%s\r\n",KOMANDOAK[COM_LIST]);
+			case COM_SENT:	// Fitxategi zerrenda eskatu eta pantailaratu.
+				sprintf(buf,"%s\r\n",KOMANDOAK[COM_SENT]);
 				write(sock,buf,strlen(buf));				// Bidali komandoa.
 				n = readline(sock, buf, MAX_BUF);		// Erantzuna jaso.
 				status = parse(buf);
@@ -163,11 +163,11 @@ int main(int argc, char const *argv[])
 				}	
 				break;			
 
-			case OP_DEL: // Mezu bat ezabatu.
+			case COM_REMV: // Mezu bat ezabatu.
 				printf("Idatzi ezabatu nahi duzun fitxategiaren izena: ");
 				fgets(param,MAX_BUF,stdin);
 				param[strlen(param)-1] = 0;
-				sprintf(buf,"%s%s\r\n",KOMANDOAK[/*mezu bat ezabatzearen komandoa*/], param);
+				sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_REMV], param);
 				write(sock,buf,strlen(buf));				// Eskaera bidali.
 				n = readline(sock, buf, MAX_BUF);		// Erantzuna jaso.
 				status = parse(buf);
@@ -179,11 +179,11 @@ int main(int argc, char const *argv[])
 				}
 				break;
 
-			case OP_OPE:		// Mezu bat zabaldu.
+			case COM_OPEN:		// Mezu bat zabaldu.
 				printf("Idatzi zabaldu nahi duzun fitxategiaren izena: ");
 				fgets(param,MAX_BUF,stdin);
 				param[strlen(param)-1] = 0;
-				sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_DELE/*mezu bat zabaltzearen komandoa*/], param);
+				sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_OPEN], param);
 				write(sock,buf,strlen(buf));				// Eskaera bidali.
 				n = readline(sock, buf, MAX_BUF);		// Erantzuna jaso.
 				status = parse(buf);
@@ -196,11 +196,11 @@ int main(int argc, char const *argv[])
 				}
 				break;
 
-			case OP_SEN:		// Mezu bat bidali.
+			case COM_SENT:		// Mezu bat bidali.
 				printf("Idatzi bidali nahi duzun fitxategiaren izena: ");
 				fgets(param,MAX_BUF,stdin);
 				param[strlen(param)-1] = 0;
-				sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_DELE/*mezu bat bidaltzearen komandoa*/], param);
+				sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_SENT], param);
 				//nori bidali biakon nun jarri bida?
 				write(sock,buf,strlen(buf));				// Eskaera bidali.
 				n = readline(sock, buf, MAX_BUF);		// Erantzuna jaso.
@@ -214,8 +214,8 @@ int main(int argc, char const *argv[])
 				}
 				break;
 
-			case OP_EXIT:		// Sesioa amaitu.
-				sprintf(buf,"%s\r\n",KOMANDOAK[COM_EXIT]);
+			case COM_LGOU:		// Sesioa amaitu.
+				sprintf(buf,"%s\r\n",KOMANDOAK[COM_LGOU]);
 				write(sock,buf,strlen(buf));				// Eskaera bidali.
 				n = readline(sock, buf, MAX_BUF);		// Erantzuna jaso.
 				status = parse(buf);
