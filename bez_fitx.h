@@ -2,15 +2,13 @@
 #define SERVER "localhost"
 #define PORT 6012
 
-#define COM_USER	0 //COM ta OP-ekin dudak. Bakoitza zetako?
-#define COM_PASS	1
-#define COM_LIST	2
-#define COM_DOWN	3 //bi down zetako?
-#define COM_DOW2	4
-#define COM_UPLO	5 //bi upload zetako?
-#define COM_UPL2	6
-#define COM_DELE	7
-#define COM_EXIT	8
+#define ERR_LGIN	1
+#define ERR_TEXT	2
+#define ERR_RFSH	3
+#define ERR_INBX	4
+#define ERR_SENT	5
+#define ERR_OPEN	6
+#define ERR_REMV	7
 
 #define OP_SEND_LIST	1
 #define OP_RECV_LIST	2
@@ -20,7 +18,7 @@
 #define OP_EXIT			6
 
 
-char * KOMANDOAK[] = {"LGIN","PASS","TEXT","RFSH","INBX","SENT","OPEN","REMV","LGOU",NULL};
+char * KOMANDOAK[] = {"LGIN", "LGOU", "TEXT", "RFSH", "INBX", "SENT", "OPEN", "REMV", NULL};
 char * ER_MEZUAK[] = //mezuak aldatu bidie
 {
 	"Dena ondo. Errorerik ez.\n",
