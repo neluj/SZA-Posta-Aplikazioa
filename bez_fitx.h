@@ -12,14 +12,15 @@
 #define COM_DELE	7
 #define COM_EXIT	8
 
-#define OP_LIST	1
-#define OP_DOWN	2
-#define OP_UP	3
-#define OP_DEL	4
-#define OP_EXIT	5
+#define OP_SEND_LIST	1
+#define OP_RECV_LIST	2
+#define OP_DOWN			3
+#define OP_UP			4
+#define OP_DEL			5
+#define OP_EXIT			6
 
 
-char * KOMANDOAK[] = {"LGIN",/*PASS beharrezkue da?*/"PASS","TEXT","RFSH","INBX","SENT","OPEN","REMV","LGOU",NULL};
+char * KOMANDOAK[] = {"LGIN","PASS","TEXT","RFSH","INBX","SENT","OPEN","REMV","LGOU",NULL};
 char * ER_MEZUAK[] =
 {
 	"Dena ondo. Errorerik ez.\n",
