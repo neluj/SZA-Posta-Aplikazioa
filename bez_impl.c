@@ -113,19 +113,6 @@ int main(int argc, char const *argv[])
 						buf[n-2] = 0;
 						printf("%s\t\t",strtok(buf,"?")); 
 						fitx_tamaina = atol(strtok(NULL,"?"));
-						if(fitx_tamaina < 0) //tamaina zetako? Beharrezkue?
-							printf("Tamaina ezezaguna\n");
-						else
-						{
-							if(fitx_tamaina < 1024)
-								printf("% 5ld B\n", fitx_tamaina);
-							else if(fitx_tamaina < 1024*1024)
-								printf("%5.1f KB\n", fitx_tamaina/1024.0);
-							else if(fitx_tamaina < 1024*1024*1024)
-								printf("%5.1f MB\n", fitx_tamaina/(1024.0*1024));
-							else
-								printf("%5.1f GB\n", fitx_tamaina/(1024.0*1024*1024));
-						}
 						kop++;
 						n = readline(sock, buf, MAX_BUF);
 					}
@@ -162,19 +149,6 @@ int main(int argc, char const *argv[])
 						buf[n-2] = 0;
 						printf("%s\t\t",strtok(buf,"?")); 
 						fitx_tamaina = atol(strtok(NULL,"?"));
-						if(fitx_tamaina < 0) //tamaina zetako? Beharrezkue?
-							printf("Tamaina ezezaguna\n");
-						else
-						{
-							if(fitx_tamaina < 1024)
-								printf("% 5ld B\n", fitx_tamaina);
-							else if(fitx_tamaina < 1024*1024)
-								printf("%5.1f KB\n", fitx_tamaina/1024.0);
-							else if(fitx_tamaina < 1024*1024*1024)
-								printf("%5.1f MB\n", fitx_tamaina/(1024.0*1024));
-							else
-								printf("%5.1f GB\n", fitx_tamaina/(1024.0*1024*1024));
-						}
 						kop++;
 						n = readline(sock, buf, MAX_BUF);
 					}
