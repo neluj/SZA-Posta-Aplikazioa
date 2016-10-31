@@ -5,9 +5,9 @@
 #define COM_USER	0 //COM ta OP-ekin dudak. Bakoitza zetako?
 #define COM_PASS	1
 #define COM_LIST	2
-#define COM_DOWN	3
+#define COM_DOWN	3 //bi down zetako?
 #define COM_DOW2	4
-#define COM_UPLO	5
+#define COM_UPLO	5 //bi upload zetako?
 #define COM_UPL2	6
 #define COM_DELE	7
 #define COM_EXIT	8
@@ -21,7 +21,7 @@
 
 
 char * KOMANDOAK[] = {"LGIN","PASS","TEXT","RFSH","INBX","SENT","OPEN","REMV","LGOU",NULL};
-char * ER_MEZUAK[] =
+char * ER_MEZUAK[] = //mezuak aldatu bidie
 {
 	"Dena ondo. Errorerik ez.\n",
 	"Komando ezezaguna edo ustegabekoa.\n",

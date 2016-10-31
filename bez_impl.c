@@ -92,7 +92,7 @@ int main(int argc, char const *argv[])
 		aukera = menua();		// Erakutsi aukeren menua.
 		switch(aukera)
 		{
-			case OP_LIST:	// Fitxategi zerrenda eskatu eta pantailaratu.
+			case OP_RECV_LIST:	// Fitxategi zerrenda eskatu eta pantailaratu.
 				sprintf(buf,"%s\r\n",KOMANDOAK[COM_LIST]);
 				write(sock,buf,strlen(buf));				// Bidali komandoa.
 				n = readline(sock, buf, MAX_BUF);		// Erantzuna jaso.
@@ -128,7 +128,7 @@ int main(int argc, char const *argv[])
 				break;
 
 				//Behar ez diren kode-lerroak ezabatu
-			case OP_LIST2:	// Fitxategi zerrenda eskatu eta pantailaratu.
+			case OP_SEND_LIST:	// Fitxategi zerrenda eskatu eta pantailaratu.
 				sprintf(buf,"%s\r\n",KOMANDOAK[COM_LIST]);
 				write(sock,buf,strlen(buf));				// Bidali komandoa.
 				n = readline(sock, buf, MAX_BUF);		// Erantzuna jaso.
@@ -167,7 +167,7 @@ int main(int argc, char const *argv[])
 				printf("Idatzi ezabatu nahi duzun fitxategiaren izena: ");
 				fgets(param,MAX_BUF,stdin);
 				param[strlen(param)-1] = 0;
-				sprintf(buf,"%s%s\r\n",KOMANDOAK[COM_DELE/*mezu bat ezabatzearen komandoa*/], param);
+				sprintf(buf,"%s%s\r\n",KOMANDOAK[/*mezu bat ezabatzearen komandoa*/], param);
 				write(sock,buf,strlen(buf));				// Eskaera bidali.
 				n = readline(sock, buf, MAX_BUF);		// Erantzuna jaso.
 				status = parse(buf);
@@ -222,7 +222,7 @@ int main(int argc, char const *argv[])
 				if(status != 0)
 				{
 					fprintf(stderr,"Errorea: ");
-					fprintf(stderr,"%s",ER_MEZUAK[status]);
+					fprintf(stderr,"%s",ER_MEZUAK[status]); //igual status aldatu ein bida
 				}
 				break;
 		}
@@ -240,8 +240,8 @@ int menua()
 	printf("\t\t\t\t*********************************************\n");
 	printf("\t\t\t\t*********************************************\n");
 	printf("\t\t\t\t**                                         **\n");
-	printf("\t\t\t\t**    	  1. Jasotako mezuen zerrenda      **\n"); //OIHAN
-	printf("\t\t\t\t**        2. Bidalitako mezuen zerrenda    **\n"); //OIHAN
+	printf("\t\t\t\t**    	  1. Jasotako mezuen zerrenda      **\n"); //OIHAN (einde)
+	printf("\t\t\t\t**        2. Bidalitako mezuen zerrenda    **\n"); //OIHAN (einde)
 	printf("\t\t\t\t**        3. Mezu bat ezabatu              **\n"); //OIHAN (einde)
 	printf("\t\t\t\t**        4. Mezu bat zabaldu              **\n"); //JULEN
 	printf("\t\t\t\t**        5. Mezu bat bidali               **\n"); //JULEN
